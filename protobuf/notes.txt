@@ -1,0 +1,31 @@
+Langauge-agnostic binary serialization format dev by google
+    - Protocol Buffers are language-neutral, platform-neutral extensible mechanisms for serializing structured data.
+
+Key Features-
+    - smaller binary representation of data compared to text based formats like json
+    - serialization and deserialization is faster(speed)
+    - cross platform compatibility
+
+use cases-
+    -microservices communication
+    -proper contracts for apis
+    -data storage
+    -game development
+
+advantages-
+    -backward and forward compatibility
+    -strongly typed
+
+
+Basic Structure of a .proto File-
+--------------
+syntax = "proto3"
+package example;
+// Message definition
+message Person {
+    string name = 1;
+    int32 id = 2;
+    string email = 3;
+}
+----------------
+<field_type> <field_name> = <field_number>

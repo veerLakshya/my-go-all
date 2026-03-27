@@ -219,7 +219,8 @@ func DeleteOneExecHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+func ExecsLoginHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Login handler")
 	var req models.Exec
 
 	// Data Validation
@@ -245,13 +246,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	var user models.Exec
-	err = db.QueryRow(`SELECT id, first_name, last_name, username, password, inactive_status, role FROM execs WHERE username = ?`, req.Username).Scan(&user.ID, &user.FirstName, &user.FirstName, &user.LastName, &user.Password, &user.InactiveStatus)
+	err = db.QueryRow(`SELECT id, first_name, last_name, username, password, inactive_status, role FROM execs WHERE username = ?`, req.Username).Scan(&user.ID, &user.FirstName, &user.FirstName, &user.LastName, &user.Password, &user.InactiveStatus, &user.Role)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			utils.ErrorHandler(err, "user not found")
+			fmt.Println(err)
 			http.Error(w, "user not found", http.StatusBadRequest)
 			return
 		}
+		fmt.Println(err)
 		http.Error(w, "database query error", http.StatusBadRequest)
 		return
 	}
